@@ -1,0 +1,145 @@
+<div >
+    <label for="">CLIENT ID</label>
+    <input type="text" placeholder="Enter client id received on email"
+     >
+   <!--  <mat-error *ngIf="enquiryForm.get('full_name')!.hasError('required') && isTouch"> First Name is
+      required
+    </mat-error> -->
+    <input class="btn style2" type="submit" (click)="onClientIDSubmit()">
+  </div>
+  <div>
+    <h2>CHOOSE INVESTOR DETAIL</h2>
+    <section *ngFor="let item of list">
+        <mat-checkbox   (change)="toggle($event)">{{item.type}}</mat-checkbox>
+      </section>
+  </div>
+<div>
+    <mat-stepper  #stepper>
+        <mat-step [stepControl]="clientFormA">
+          <form [formGroup]="clientFormA">
+            <ng-template matStepLabel>JOINT INVESTOR 1, OR INDIVIDUAL TRUSTEE 1</ng-template>
+            <mat-form-field>
+              <mat-label>Title</mat-label>
+              <input matInput placeholder="Last name, First name" formControlName="username" required>
+            </mat-form-field><br>
+            <mat-form-field>
+              <mat-label>Given name(s)</mat-label>
+              <input matInput placeholder="Last name, First name" formControlName="username" required>
+            </mat-form-field><br>
+            <mat-form-field>
+                <mat-label>Surname</mat-label>
+                <input matInput placeholder="Last name, First name" formControlName="username" required>
+              </mat-form-field><br>
+              <mat-form-field>
+                <mat-label>Date of birth </mat-label>
+                <input matInput placeholder="Last name, First name" formControlName="username" required>
+              </mat-form-field>
+              <mat-form-field><br>
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Last name, First name" formControlName="username" required>
+              </mat-form-field><br>
+              <mat-form-field>
+                <mat-label>Residential address </mat-label>
+                <input matInput placeholder="Last name, First name" formControlName="username" required>
+              </mat-form-field><br>
+              <mat-form-field>
+              <mat-label>Suburb </mat-label>
+                <input class="col-xs-4 col-xs-offset-2"  matInput placeholder="Last name, First name" formControlName="username" required>
+                </mat-form-field>
+                <mat-form-field>
+                <mat-label>state </mat-label>
+                <input class="col-xs-4 col-xs-offset-2" matInput placeholder="Last name, First name" formControlName="username" required>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Postcode </mat-label>
+                <input class="col-xs-4 col-xs-offset-2" matInput placeholder="Last name, First name" formControlName="username" required>
+              </mat-form-field>
+              <div>
+                <mat-label>Are you an Australian resident for tax purposes? 
+                </mat-label>
+                <section *ngFor="let item of responseList">
+                <mat-checkbox  #checkbox matinput [disabled]="item.checked" formControlName="username" (change)="taxValue($event,item.value)">{{item.type}}</mat-checkbox>
+                
+            </section>
+            <div *ngIf="showTaxFieldY">
+              <mat-form-field>
+                <mat-label>If you are an Australian resident for tax purposes, please insert your tax file (TFN) </mat-label>
+                <input class="col-xs-4 col-xs-offset-2" matInput placeholder="Last name, First name" formControlName="username" required>
+              </mat-form-field>
+         </div>
+         <div *ngIf="showTaxFieldN">
+          <mat-form-field>
+            <mat-label>if no specify relevant country/countries </mat-label>
+            <input class="col-xs-4 col-xs-offset-2" matInput placeholder="Last name, First name" formControlName="password" required>
+          </mat-form-field>
+      </div>
+              </div>
+              <div>
+                <mat-label>If you are a foreign resident for tax purposes, do you have a tax identification
+                    number (TIN)? 
+                </mat-label>
+                <section *ngFor="let item of responseList">
+                <mat-checkbox matinput formControlName="username" (change)="foreignTaxValue($event,item.value)">{{item.type}}</mat-checkbox>
+            </section>
+            <div *ngIf="showForeignTaxFieldY">
+              <mat-form-field>
+                <mat-label> Please provide TIN for each country of tax residency:  </mat-label>
+                <input class="col-xs-4 col-xs-offset-2" matInput placeholder="Last name, First name" formControlName="username" required><br>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label> TIN  </mat-label><br>
+                <input class="col-xs-4 col-xs-offset-2" matInput placeholder="Last name, First name" formControlName="username" required>
+              </mat-form-field>
+         </div>
+        
+         <div *ngIf="showForeignTaxFieldN">
+          <mat-form-field>
+            <mat-label>Please tick one of the following:  </mat-label>
+            <input class="col-xs-4 col-xs-offset-2" matInput placeholder="Last name, First name" formControlName="username" required>
+          </mat-form-field>
+              </div>
+              </div>
+              <div>
+                <mat-label>Are you a Politically Exposed Person? 
+                </mat-label>
+                <section *ngFor="let item of responseList">
+                <mat-checkbox  matinput formControlName="username" [checked]="item.value" (change)="toggle($event)">{{item.type}}</mat-checkbox>
+            </section>
+              </div>
+              <div>
+                <mat-label>Please identify the source of your assets or wealth that are used for investment purposes.
+                </mat-label>
+                <section *ngFor="let item of AssetList">
+                <mat-checkbox  matinput formControlName="username"  (change)="toggle($event)">{{item.type}}</mat-checkbox>
+            </section>
+              </div>
+            <div>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="clientFormB" label=". JOINT INVESTOR 2 OR INDIVIDUAL TRUSTEE 2">
+          <!-- <form [formGroup]="secondFormGroup">
+            <mat-form-field>
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                     required>
+            </mat-form-field>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button matStepperNext>Next</button>
+            </div>
+          </form> -->
+          <h1>ffff</h1>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Done</ng-template>
+          <p>You are now done.</p>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+      
+</div>
